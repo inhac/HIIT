@@ -1,0 +1,126 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+#hiit {
+  text-align: center;
+  width:800px;
+  max-height: 200px;
+  vertical-align: top;
+  font-family: system-ui;
+  margin: auto;
+  padding: auto;
+}
+.div-left{
+    float: left;
+    padding-left: 10px;
+}
+.div-right{
+    float: right;
+    padding-right: 10px;
+}
+#timer {
+	height: 200px;
+	vertical-align: top;
+}
+#timertxt {
+  text-align: center;
+  font-family: system-ui;
+  vertical-align: top;
+  font-weight: bold;
+  font-size: 200px;
+  padding: auto;
+  color: #222222;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#timerbtn {
+  padding: 10px;
+  width: 250px;
+  text-align: center;
+  vertical-align: top;
+  font-family: system-ui;
+  font-weight: bold;
+  font-size: 50px;
+  margin-top: 30px;
+  color: #222222;
+}
+#task {
+  width: 400px;
+}
+#tasktxt {
+  text-align: left;
+  vertical-align: middle;
+  font-family: system-ui;
+  font-weight: normal;
+  font-size: 40px;
+  padding: auto;
+  color: #222222;
+}
+</style>
+</head>
+<body>
+
+<div id="hiit">
+	<div id="timer" class="div-left">
+		<p id="timertxt">30</p>
+		<input id="timerbtn" type="button" value="START" onclick="doCountDown();" />
+	</div>
+	<div id="task" class="div-right">
+		<p id="tasktxt" >Click on the START button to begin. The first 30 seconds will show you the instruction. Each exercise will be 30 seconds in length followed by 30 seconds of rest.</p>
+	</div>
+</div>
+
+<script>
+// Set the date we're counting down to
+var countDownSeconds = 30;
+var counter = 0;
+var countDown = true;
+var paused = false;
+
+function doPause() {
+	document.getElementById("timerbtn").value = "RESUME";
+	document.getElementById("timerbtn").onclick = new Function("doResume()");
+	paused = true;
+}
+
+function doResume() {
+	document.getElementById("timerbtn").value = "PAUSE";
+	document.getElementById("timerbtn").onclick = new Function("doPause()");
+	paused = false;
+}
+
+
+function doCountDown() {
+
+	// Update the count down every 1 second
+	var x = setInterval(function() {
+
+		var seconds;
+
+		if (!paused) {
+			if (countDown) {
+				seconds = countDownSeconds - counter++;
+			} else {
+				seconds = countDownSeconds - counter--;
+			}
+			document.getElementById("timertxt").innerHTML = seconds;
+			// If the count down is over, write some text 
+			if (counter == 0 || counter == countDownSeconds) {
+				countDown = !countDown;
+			}
+		}
+
+	}, 1000);
+
+	document.getElementById("timerbtn").value = "PAUSE";
+	document.getElementById("timerbtn").onclick = new Function("doPause()");
+
+}
+</script>
+
+</body>
+</html>
+
+
