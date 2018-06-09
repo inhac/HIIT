@@ -54,7 +54,25 @@
   vertical-align: middle;
   font-family: system-ui;
   font-weight: normal;
+  font-size: 30px;
+  padding: auto;
+  color: #222222;
+}
+.tasktitle {
+  text-align: center;
+  vertical-align: middle;
+  font-family: system-ui;
+  font-weight: normal;
   font-size: 40px;
+  padding: auto;
+  color: #222222;
+}
+.taskdesc {
+  text-align: left;
+  vertical-align: middle;
+  font-family: system-ui;
+  font-weight: normal;
+  font-size: 30px;
   padding: auto;
   color: #222222;
 }
@@ -68,7 +86,10 @@
 		<input id="timerbtn" type="button" value="START" onclick="doCountDown();" />
 	</div>
 	<div id="task" class="div-right">
-		<p id="tasktxt" >Click on the START button to begin. The first 30 seconds will show you the instruction. Each exercise will be 30 seconds in length followed by 30 seconds of rest.</p>
+		<div id="tasktxt" >
+			<p class="tasktitle">Ready??</p>
+			<p class="taskdesc">Click on the START button to begin. The first 30 seconds will show you the instruction. Each exercise will be 30 seconds in length followed by 30 seconds of rest.</p>
+		</div>
 	</div>
 </div>
 
@@ -109,7 +130,18 @@ function doCountDown() {
 			// If the count down is over, write some text 
 			if (counter == 0 || counter == countDownSeconds) {
 				countDown = !countDown;
+				taskTxt = document.getElementById("tasktxt");
+				xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4) {
+						if (this.status == 200) {taskTxt.innerHTML = this.responseText;}
+						if (this.status == 404) {taskTxt.innerHTML = "Page not found.";}
+					}
+				}
+				xhttp.open("GET", "hiit-1.incl", true);
+				xhttp.send();
 			}
+
 		}
 
 	}, 1000);
